@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpa
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-export default Login = () => {
+export default function LoginScreen() {
     const [showPassword, setShowPassword] = useState(false)
     const toggleShowPassword = () => {
       setShowPassword(!showPassword);

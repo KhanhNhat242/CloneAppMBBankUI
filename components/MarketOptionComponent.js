@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Image,  TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity } from 'react-native'
 
-function MainOptionComponent (props){
+function MarketOptionComponent(props) {
     const {option, onPress} = props;
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -12,33 +12,26 @@ function MainOptionComponent (props){
         </TouchableOpacity>
     )
 }
-export default MainOptionComponent;
+export default MarketOptionComponent;
 const styles = StyleSheet.create({ 
     container: {
         borderRadius: 10,
-        margin: 10,
-        width: 100,
-        height: 100,
-        backgroundColor: 'white',
+        margin: 8,
+        marginVertical: 20,
+        width: 75,
+        height: 65,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: 'black',
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        elevation: 1,    
     },
     img: {  
-        width: 30,
-        height: 30,
-        resizeMode: 'contain',
+        width: 55,
+        height: 55,
+        resizeMode: 'center',
         margin: 10,
     },
     title: {
-        fontSize: 14,
+        fontSize: 10,
         color: 'black',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginHorizontal:10
-        
+        textAlign: 'center',        
     },
 })
