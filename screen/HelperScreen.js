@@ -4,92 +4,63 @@ import OptionComponent from '../components/OptionComponent'
 import UseFulnessOptionComponent from '../components/UseFulnessOptionComponent'
 import MainOptionComponent from '../components/MainOptionComponent'
 import { useNavigation } from '@react-navigation/native';
-export default function SearchScreen() {
+import HelperComponent from '../components/HelperComponent'
+export default function HelperScreen() {
   const navigation = useNavigation();
   const goBack = () => {
     navigation.goBack();
   }
-  const goHome = () => {
-    navigation.navigate('Main');
-  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={goBack}>
+        <TouchableOpacity onPress={goBack} style={{position:'absolute', left: 10, bottom: 10}}>
           <Image
             source={require('../assets/mainIcon/back.png')}
-            style={{ width: 15, height: 15, margin: 10, resizeMode: 'contain' }}
+            style={{ width: 15, height: 15, margin: 5, resizeMode: 'contain' }}
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Tìm kiếm</Text>
-        <TouchableOpacity onPress={goHome}>
-          <Image
-            source={require('../assets/mainIcon/home.png')}
-            style={{ width: 20, height: 20, margin: 10, resizeMode: 'contain' }}
-          />
-        </TouchableOpacity>
+        <Text style={styles.headerTitle}>eMBee Helper</Text>
       </View>
       <View style={styles.body}>
-        <View style={styles.searchWrapper}>
-          <Image source={require('../assets/mainIcon/searchBlue.png')}
-            style={styles.imgSearch} />
-          <TextInput placeholder='Tìm kiếm' style={styles.txtInput} />
-        </View>
-        <Text style={styles.recommend}>Đề xuất</Text>
+        <Text style={styles.title}>Hãy để eMBee hỗ trợ bạn</Text>
         <View style={styles.options}>
           <FlatList style={styles.flatList}
             data={optionList}
-            renderItem={({ item }) => <MainOptionComponent option={item} />}
-            numColumns={3}
+            renderItem={({ item }) => <HelperComponent option={item} />}
+            numColumns={2}
             contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
             scrollEnabled={false} />
         </View>
+        <Text style={styles.title}>Yêu cầu của bạn</Text>
+        <Image source={require('../assets/mainIcon/noRequest.png')}
+            style={{width: 200, height: 200, resizeMode: 'contain'}}
+            />
       </View>
     </View>
   )
 }
   var optionList = [
     {
-        title: 'Thanh toán',
-        img: require('../assets/mainIcon/pay.png'),
+        title: 'Hỗ trợ khách hàng',
+        img: require('../assets/mainIcon/support.png'),
         checked: true
     },
     {
-        title: 'Rút tiền ATM',
-        img: require('../assets/mainIcon/rutTienATM.png'),
+        title: 'Tư vấn sản phẩm',
+        img: require('../assets/mainIcon/advise.png'),
         checked: true
     },
     {
-        title: 'Mã QR của tôi',
-        img: require('../assets/mainIcon/myQR.png'),
+        title: 'Tra soát giao dịch',
+        img: require('../assets/mainIcon/trans.png'),
         checked: true
     },
     {
-        title: 'Quà tặng',
-        img: require('../assets/mainIcon/cover.png'),
+        title: 'Tra cứu và Hướng dẫn',
+        img: require('../assets/mainIcon/guide.png'),
         checked: true
     },
-    {
-        title: 'Khách hàng thân thiết',
-        img: require('../assets/mainIcon/loyalCustomer.png'),
-        checked: true
-    },
-    {
-        title: 'Thiết lập Digital OTP',
-        img: require('../assets/mainIcon/otp.png'),
-        checked: true
-    },
-    {
-      
-  },
-  {
-      title: 'Mua vé máy bay Vietnam Airlines',
-      img: require('../assets/mainIcon/VnAir.png'),
-      checked: true
-  },
-  {
-      
-  },
+
 ]
 const styles = StyleSheet.create({
   container: {
@@ -102,9 +73,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   flatList: {
     position: 'sticky',
+    marginLeft: -20
   },
   header: {
     height: '10%',
@@ -112,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1D00D4',
     alignItems: 'flex-end',
     paddingBottom: 10,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexDirection: 'row'
 
   },
@@ -145,9 +118,12 @@ const styles = StyleSheet.create({
     height: 20,
   },
   title: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+    alignSelf: 'flex-start',
+    marginLeft: 10,
+    marginVertical: 20
   },
   txtInput: {
     width: '90%',

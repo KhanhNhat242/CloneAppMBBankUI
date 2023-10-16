@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen() {
+
     const navigation = useNavigation();
     const adData = [
         { id: 1, imageUrl: require('../assets/banner/banner1.png') },
@@ -30,6 +31,9 @@ export default function HomeScreen() {
     const goToSearch = () => {
         navigation.navigate('Search');
     }
+    const goToHelper = () => {
+        navigation.navigate('Helper');
+    }
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scroll} bounces={false}>
@@ -45,7 +49,7 @@ export default function HomeScreen() {
                                     style={{ height: 24, width: 24, resizeMode: 'contain' }}
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ height: 24, width: 24, margin: 10 }}>
+                            <TouchableOpacity style={{ height: 24, width: 24, margin: 10 }} onPress={goToHelper}>
                                 <Image
                                     source={require('../assets/mainIcon/chat.png')}
                                     style={{ height: 24, width: 24, resizeMode: 'contain' }}
@@ -137,26 +141,32 @@ var optionList = [
     {
         title: 'Chuyển tiền',
         img: require('../assets/mainIcon/send.png'),
+        checked: true
     },
     {
         title: 'Nạp điện thoại',
         img: require('../assets/mainIcon/pushCard.png'),
+        checked: true
     },
     {
         title: 'Tiền gửi & đầu tư',
         img: require('../assets/mainIcon/money.png'),
+        checked: true
     },
     {
         title: 'Thanh toán',
         img: require('../assets/mainIcon/pay.png'),
+        checked: true
     },
     {
         title: 'Vay Online',
         img: require('../assets/mainIcon/loan.png'),
+        checked: true
     },
     {
         title: 'Dịch vụ thẻ',
         img: require('../assets/mainIcon/serviceCard.png'),
+        checked: true
     },
 ]
 var marketList = [

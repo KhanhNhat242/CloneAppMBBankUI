@@ -47,7 +47,7 @@ export default function SettingAccountComponent({ isVisible, onClose }) {
             </View>
             <View style={{flexDirection:'row', backgroundColor: 'white', alignItems:'center', width: '100%'}}>
                 <Image 
-                source={require('../assets/mainIcon/pay.png')}
+                source={require('../assets/mainIcon/info.png')}
                 style={styles.icon}/>
                 <Text style={{fontSize:16, fontWeight: 'bold', marginLeft: 15}}>Phiên bản app</Text>
                 <Text style={{fontSize:16, fontWeight: 'bold', marginLeft: 15, color:'#1D00D4',  textDecorationLine: 'underline', position:'absolute', right: 15}}>Kiểm tra phiên bản</Text>
@@ -63,27 +63,27 @@ export default function SettingAccountComponent({ isVisible, onClose }) {
 var optionList = [
     {
         title: 'Quản lý thiết bị',
-        img: require('../assets/mainIcon/send.png'),
+        img: require('../assets/mainIcon/phone.png'),
         arrow: true,
     },
     {
         title: 'Thay đổi mật khẩu',
-        img: require('../assets/mainIcon/pushCard.png'),
+        img: require('../assets/mainIcon/key.png'),
         arrow: true,
     },
     {
         title: 'Thông tin email',
-        img: require('../assets/mainIcon/pushCard.png'),
+        img: require('../assets/mainIcon/mail.png'),
         arrow: true,
     },
     {
         title: 'Gửi hỗ trợ',
-        img: require('../assets/mainIcon/pushCard.png'),
+        img: require('../assets/mainIcon/suportMail.png'),
         arrow: true,
     },
     {
         title: 'Phiên bản chợ 28.1.6',
-        img: require('../assets/mainIcon/pushCard.png'),
+        img: require('../assets/mainIcon/info.png'),
     },
 
 ]
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         width: 35,
         height: 35,
         margin: 10,
-        marginLeft: 15,
+        marginLeft: 20,
         resizeMode: 'contain',
     },
     footer: {
