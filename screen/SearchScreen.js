@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
+    marginBottom: 5
   },
   body: {
     width: '100%',

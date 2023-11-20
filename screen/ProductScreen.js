@@ -88,12 +88,13 @@ const styles = StyleSheet.create({
   options: {
     marginTop: 10,
     width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  flatList: {
-    position: 'sticky',
-  },
+  // flatList: {
+  //   position: 'sticky',
+  // },
   header: {
     height: '10%',
     width: '100%',

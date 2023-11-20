@@ -11,6 +11,7 @@ import SearchScreen from './SearchScreen.js';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HelperScreen from './HelperScreen.js';
+import TransferMoneyScreen from './TransferMoneyScreen.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -76,12 +77,12 @@ const Stack = createNativeStackNavigator();
 export default function RootComponent() {
     return (
         <NavigationContainer>
-
             <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown:false}}>
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Main" component={MyTabs}/>
                 <Stack.Screen name="Search" component={SearchScreen}/>
                 <Stack.Screen name="Helper" component={HelperScreen}/>
+                <Stack.Screen name="TransferMoney" component={TransferMoneyScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

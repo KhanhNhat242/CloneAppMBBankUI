@@ -3,7 +3,7 @@ import React from 'react'
 import AccountOptionComponent from './AccountOptionComponent'
 import { Ionicons } from '@expo/vector-icons';
 
-export default function SettingAccountComponent({ isVisible, onClose }) {
+export default function SettingAccountComponent({ isVisible, onClose, userData }) {
     return (
         <Modal
             transparent={true}
@@ -27,8 +27,8 @@ export default function SettingAccountComponent({ isVisible, onClose }) {
                     style={styles.img}
                 />
                 <View style={{ margin: 10 }}>
-                    <Text style={styles.userName}>HUYNH HUU PHUOC</Text>
-                    <Text style={styles.loginName}>Tên đăng nhập: 0348307336</Text>
+                    <Text style={styles.userName}>{userData.userName}</Text>
+                    <Text style={styles.loginName}>Tên đăng nhập: {userData.phone}</Text>
                 </View>
                 <Image
                     source={require('../assets/mainIcon/shield.png')}
@@ -132,10 +132,12 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#1D00D4',
+        textTransform: 'uppercase',
     },
     loginName: {
         fontSize: 14,
         color: 'black',
+        
     },
     body: {
         width: '100%',

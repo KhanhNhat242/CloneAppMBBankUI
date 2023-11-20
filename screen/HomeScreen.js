@@ -5,11 +5,10 @@ import MainOptionComponent from '../components/MainOptionComponent.js';
 import MarketOptionComponent from '../components/MarketOptionComponent.js';
 import SettingAccountComponent from '../components/SettingAccountModal.js';
 import { useNavigation } from '@react-navigation/native';
+import AccountModal from '../components/AccountModal.js';
 
-
-
-export default function HomeScreen() {
-
+export default function HomeScreen(props) {
+    const { userData } = props.route.params;
     const navigation = useNavigation();
     const adData = [
         { id: 1, imageUrl: require('../assets/banner/banner1.png') },
@@ -24,15 +23,27 @@ export default function HomeScreen() {
         { id: 10, imageUrl: require('../assets/banner/banner10.png') }
     ];
     const [isPopupVisible, setPopupVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const [isShow, setShow] = useState(false);
+    const popupModal = () => {
+        setIsVisible(!isVisible);
+    }
 
     const togglePopup = () => {
-      setPopupVisible(!isPopupVisible);
+        setPopupVisible(!isPopupVisible);
     };
     const goToSearch = () => {
         navigation.navigate('Search');
     }
     const goToHelper = () => {
         navigation.navigate('Helper');
+    }
+    const goToOptionScreen = (screen) => {
+        navigation.navigate(screen);
+    }
+    const showAccountModal = () => {
+            popupModal();
+            setShow(!isShow);
     }
     return (
         <View style={styles.container}>
@@ -41,7 +52,7 @@ export default function HomeScreen() {
                     source={require('../assets/background.png')}
                     style={styles.imageBackground}>
 
-                    <View style={styles.header}>
+                    <View style={[styles.header, {height: 250}]}>
                         <View style={styles.menuHeader}>
                             <TouchableOpacity style={{ height: 24, width: 24, margin: 10 }} onPress={togglePopup}>
                                 <Image
@@ -57,7 +68,7 @@ export default function HomeScreen() {
                             </TouchableOpacity>
 
                             <Image style={styles.logo} source={require('../assets/mainIcon/logoMB.png')} ></Image>
-                            <TouchableOpacity style={{ height: 24, width: 24, margin: 10, paddingLeft:20}} onPress={goToSearch}>
+                            <TouchableOpacity style={{ height: 24, width: 24, margin: 10, paddingLeft: 20 }} onPress={goToSearch}>
                                 <Image
                                     source={require('../assets/mainIcon/search.png')}
                                     style={{ height: 24, width: 24, resizeMode: 'contain' }}
@@ -71,21 +82,26 @@ export default function HomeScreen() {
                             </TouchableOpacity>
                         </View>
                         <Text style={styles.title}>Xin chào,</Text>
-                        <Text style={styles.owner_name}>HUYNH HUU PHUOC</Text>
-                        <Text style={{ fontSize: 16, color: 'white', marginTop: 20 }}>Xem tài khoản</Text>
-
+                        <Text style={styles.owner_name}>{userData.userName}</Text>
+                        <Text style={{ fontSize: 16, color: 'white', marginTop: 10 }}>Xem tài khoản</Text>
                     </View>
-                    <View style={styles.circle}>
+                    
+                    <View style={{ width: '100%', height: 'auto'}}>
+                            {isVisible ? <AccountModal  onClose={popupModal} userData={userData} style={{height: 540, zIndex: 1}} />
+                            : null}
+                        </View>
+                        <TouchableOpacity style={[styles.circle, {top: isVisible ? 765 : 225}]} onPress={showAccountModal}>
                         <Image source={require('../assets/mainIcon/arrow.png')}
-                            style={{ height: 15, width: 15, resizeMode: 'contain', transform: [{ rotate: '90deg' }] }}
+                            style={{ height: 15, width: 15, resizeMode: 'contain', transform: [{ rotate: isVisible ? '270deg' : '90deg' }] }}
                         />
-                    </View>
+                    </TouchableOpacity>
+
                     <View style={styles.body}>
                         <Text style={styles.mainOption}>Tính năng chính</Text>
                         <View style={styles.options}>
                             <FlatList style={styles.flatList}
                                 data={optionList}
-                                renderItem={({ item }) => <MainOptionComponent option={item} />}
+                                renderItem={({ item }) => <MainOptionComponent option={item} onPress={() => goToOptionScreen(item.screen)} />}
                                 numColumns={3}
                                 contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
                                 scrollEnabled={false} />
@@ -133,7 +149,7 @@ export default function HomeScreen() {
                     </View>
                 </ImageBackground>
             </ScrollView>
-            <SettingAccountComponent isVisible={isPopupVisible} onClose={togglePopup}/>
+            <SettingAccountComponent isVisible={isPopupVisible} onClose={togglePopup} userData={userData} />
         </View>
     )
 }
@@ -141,32 +157,39 @@ var optionList = [
     {
         title: 'Chuyển tiền',
         img: require('../assets/mainIcon/send.png'),
-        checked: true
+        checked: true,
+        screen: 'TransferMoney'
     },
     {
         title: 'Nạp điện thoại',
         img: require('../assets/mainIcon/pushCard.png'),
-        checked: true
+        checked: true,
+        screen: 'TransferMoney'
+
     },
     {
         title: 'Tiền gửi & đầu tư',
         img: require('../assets/mainIcon/money.png'),
-        checked: true
+        checked: true,
+        screen: 'TransferMoney'
     },
     {
         title: 'Thanh toán',
         img: require('../assets/mainIcon/pay.png'),
-        checked: true
+        checked: true,
+        screen: 'TransferMoney'
     },
     {
         title: 'Vay Online',
         img: require('../assets/mainIcon/loan.png'),
-        checked: true
+        checked: true,
+        screen: 'TransferMoney'
     },
     {
         title: 'Dịch vụ thẻ',
         img: require('../assets/mainIcon/serviceCard.png'),
-        checked: true
+        checked: true,
+        screen: 'TransferMoney'
     },
 ]
 var marketList = [
@@ -227,13 +250,11 @@ const styles = StyleSheet.create({
     logo: {
         width: 130,
         height: 40,
-        marginTop: 0,
     },
     header: {
         width: '100%',
-        height: 250,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
     title: {
         marginVertical: 13,
@@ -244,6 +265,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: 'white',
         fontWeight: 'bold',
+        textTransform: 'uppercase',
     },
     body: {
         width: '100%',
@@ -320,11 +342,12 @@ const styles = StyleSheet.create({
     circle: {
         width: 50,
         height: 50,
-        borderRadius: 500 / 2,
+        borderRadius: 50,
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
+        zIndex: 3,
         position: 'absolute',
-        top: 225,
+
     }
 })
