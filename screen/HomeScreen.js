@@ -164,20 +164,20 @@ var optionList = [
         title: 'Nạp điện thoại',
         img: require('../assets/mainIcon/pushCard.png'),
         checked: true,
-        screen: 'TransferMoney'
+        screen: 'PhoneRecharge'
 
     },
     {
         title: 'Tiền gửi & đầu tư',
         img: require('../assets/mainIcon/money.png'),
         checked: true,
-        screen: 'TransferMoney'
+        screen: 'SendMoney'
     },
     {
         title: 'Thanh toán',
         img: require('../assets/mainIcon/pay.png'),
         checked: true,
-        screen: 'TransferMoney'
+        screen: 'Pay'
     },
     {
         title: 'Vay Online',

@@ -12,6 +12,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HelperScreen from './HelperScreen.js';
 import TransferMoneyScreen from './TransferMoneyScreen.js';
+import PhoneRechargeScreen from './PhoneRechargeScreen.js';
+import SendMoney from './SendMoneyScreen.js';
+import Pay from './Pay.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -83,6 +86,9 @@ export default function RootComponent() {
                 <Stack.Screen name="Search" component={SearchScreen}/>
                 <Stack.Screen name="Helper" component={HelperScreen}/>
                 <Stack.Screen name="TransferMoney" component={TransferMoneyScreen}/>
+                <Stack.Screen name="PhoneRecharge" component={PhoneRechargeScreen} />
+                <Stack.Screen name="SendMoney" component={SendMoney} />
+                <Stack.Screen name='Pay' component={Pay} />
             </Stack.Navigator>
         </NavigationContainer>
     )
