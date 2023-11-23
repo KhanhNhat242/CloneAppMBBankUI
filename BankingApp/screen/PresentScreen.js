@@ -13,7 +13,8 @@ export default function PresentScreen() {
           renderItem={({ item }) => <OptionComponent option={item}/>}
           numColumns={1}
           contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
-          scrollEnabled={true} />
+          scrollEnabled={true}
+           />
       </View>
     </View>
   )
@@ -22,11 +23,11 @@ export default function PresentScreen() {
 var optionList = [
   {
     title: 'Tích điểm đổi thưởng',
-    img: require('../assets/mainIcon/send.png'),
+    img: require('../assets/mainIcon/image94.png'),
   },
   {
     title: 'Đổi quà tặng',
-    img: require('../assets/mainIcon/pushCard.png'),
+    img: require('../assets/mainIcon/image96.png'),
   },
 
 ]

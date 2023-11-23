@@ -24,7 +24,7 @@ export default function AccountModal({ isVisible, onClose, userData }) {
                 </View>
 
                 <View style={styles.option1}>
-                    <View style={{justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
+                    <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
                     <View>
                         <View style={{flexDirection:"row", marginLeft: 10}}>
                             <Text style={{color:'black', fontSize: 18, fontWeight: 'bold'}}>Tài khoản nguồn</Text>
@@ -38,6 +38,21 @@ export default function AccountModal({ isVisible, onClose, userData }) {
                     <Image source={require('../assets/mainIcon/arrowGray.png')}
                         style={{ height: 15, width: 15, margin: 10,}} />
                     </View>
+                </View>
+                <View style={styles.option2}>
+                    <Text style={styles.txt}>Thẻ</Text>
+                    <Image source={require('../assets/mainIcon/arrowGray.png')}
+                        style={{ height: 15, width: 15, margin: 10,}} />
+                </View>
+                <View style={styles.option2}>
+                    <Text style={styles.txt}>Tài khoản tiền gửi số</Text>
+                    <Image source={require('../assets/mainIcon/arrowGray.png')}
+                        style={{ height: 15, width: 15, margin: 10,}} />
+                </View>
+                <View style={styles.option2}>
+                    <Text style={styles.txt}>Khoản vay</Text>
+                    <Image source={require('../assets/mainIcon/arrowGray.png')}
+                        style={{ height: 15, width: 15, margin: 10,}} />
                 </View>
             </View>
         // {/* </Modal> */}
@@ -71,5 +86,21 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         marginVertical: 10,
         borderRadius: 10
+    },
+    option2: {
+        width: '90%',
+        height: 60,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginVertical: 10,
+        justifyContent: 'space-between'
+    },
+    txt: {
+        color: 'black',
+        fontSize: 18,
+        marginLeft: 10,
+        fontWeight: 'bold'
     },
 })

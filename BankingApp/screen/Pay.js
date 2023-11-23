@@ -42,7 +42,9 @@ function Pay() {
                 <View style={styles.itemContainer}>
                     <View style={styles.itemWrapper}>
                         <Image style={styles.itemImg} source={require('../assets/mainIcon/image75.png')} />
+                        <View style={styles.txtWrapper}>
                         <Text style={styles.itemTxt}>Chia sẻ biến động số dư</Text>
+                        </View>
                     </View>
                 </View>
                 <Text style={styles.title}>Hóa đơn gia đình</Text>
@@ -73,7 +75,9 @@ function Pay() {
                     </View>
                     <View style={styles.itemWrapper}>
                         <Image style={styles.itemImg} source={require('../assets/mainIcon/image81.png')} />
-                        <Text style={styles.itemTxt}>Điện thoại cố định</Text>
+                        <View style={styles.txtWrapper}> 
+                            <Text style={styles.itemTxt}>Điện thoại cố định</Text>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -122,13 +126,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     itemWrapper: {
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
         margin: 10,
         backgroundColor: '#fff',
-        width: '48%',
+        width: 180,
     },
     itemImg: {
         width: 50,
@@ -137,5 +140,12 @@ const styles = StyleSheet.create({
     itemTxt: {
         fontSize: 16,
         fontWeight: 'bold',
+        textAlign: 'left',
+    },
+    txtWrapper: {
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 120,
     }
 })

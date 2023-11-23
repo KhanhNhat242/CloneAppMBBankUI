@@ -6,7 +6,11 @@ import MainOptionComponent from '../components/MainOptionComponent'
 import { useNavigation } from '@react-navigation/native';
 import TransferOptionComponent_Short from '../components/TransferOptionComponent_Short'
 import TransferTabComponent from '../components/TransferTabComponent'
-export default function TransferMoneyScreen() {
+import { useState } from 'react';
+export default function TransferMoneyScreen(props) {
+    const userData = props.route.params;   
+    const [data, setData] = useState(optionList);
+    const [selectedItem, setSelectedItem] = useState(null);
     const navigation = useNavigation();
     const goBack = () => {
         navigation.goBack();
@@ -14,6 +18,11 @@ export default function TransferMoneyScreen() {
     const goHome = () => {
         navigation.navigate('Main');
     }
+    const handleOptionPress = (itemId) => {
+        setSelectedItem(itemId);
+      };
+    const goToTransfer = () => {
+        navigation.navigate('Transfer', { userData })}
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -33,22 +42,24 @@ export default function TransferMoneyScreen() {
             </View>
             <View style={styles.body}>
                 <View style={styles.optionShort}>
-                    <TransferOptionComponent_Short option={{img: require('../assets/mainIcon/money.png'), title: "Quét QR"}}/>
-                    <TransferOptionComponent_Short option={{img: require('../assets/mainIcon/money.png'), title: "Giao dịch tách lệnh"}}/>
+                    <TransferOptionComponent_Short option={{ img: require('../assets/mainIcon/scanQR.png'), title: "Quét QR" }} />
+                    <TransferOptionComponent_Short option={{ img: require('../assets/mainIcon/image82.png'), title: "Giao dịch tách lệnh" }} />
                 </View>
-                <View style={styles.optionLong}>
+                <TouchableOpacity style={styles.optionLong} onPress={goToTransfer}>
                     <View style={styles.wrapperLong}>
-                        <Image source={require('../assets/mainIcon/pay.png')} style={styles.img} />
+                        <Image source={require('../assets/mainIcon/image83.png')} style={styles.img} />
                         <Text style={styles.title}>Người thụ hưởng mới</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.option}>
-                <FlatList style={styles.flatList}
-                                data={optionList}
-                                renderItem={({ item }) => <TransferTabComponent option={item} />}
-                                numColumns={3}
-                                contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
-                                scrollEnabled={false} />
+                    <FlatList style={styles.flatList}
+                        keyExtractor={(item) => item.id}
+                        data={data}
+                        renderItem={({ item }) => <TransferTabComponent option={item}  selectedItem={selectedItem} onPress={() => handleOptionPress(item.id)} />}
+                        numColumns={3}
+                        contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
+                        scrollEnabled={false}
+                        extraData={selectedItem} />
                 </View>
             </View>
         </View>
@@ -56,12 +67,15 @@ export default function TransferMoneyScreen() {
 }
 const optionList = [
     {
+        id:'1',
         title: "STK đã lưu"
     },
     {
+        id:'2',
         title: "Gần đây"
     },
     {
+        id:'3',
         title: "Mẫu giao dịch"
     },
 ]
@@ -106,7 +120,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 15
     },
-    wrapperLong: {  
+    wrapperLong: {
         width: 365,
         height: 70,
         backgroundColor: 'white',
@@ -132,14 +146,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    option:{
+    option: {
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        height:'100%',
+        height: '100%',
         backgroundColor: 'white',
         marginTop: 20
     },
-    
+
 
 })

@@ -31,34 +31,34 @@ function SendMoney() {
             <View style={styles.body}>
                 <View style={styles.itemWrapper}>
                     <View style={styles.leftWrapper}>
-                        <Image style={styles.itemImg} source={require('../assets/mainIcon/Image62.png')} />
+                        <Image style={styles.itemImg} source={require('../assets/mainIcon/image62.png')} />
                         <View style={styles.txtWrapper}>
                             <Text style={styles.itemTxt}>Đầu tư tài chính</Text>
                             <Text style={{marginLeft: 20}}>Wealth Management</Text>
                         </View>
                     </View>
-                    <Image style={styles.continueImg} source={require('../assets/mainIcon/Image63.png')} />
+                    <Image style={styles.continueImg} source={require('../assets/mainIcon/image63.png')} />
                 </View>
                 <View style={styles.itemWrapper}>
                     <View style={styles.leftWrapper}>
-                        <Image style={styles.itemImg} source={require('../assets/mainIcon/Image66.png')} />
+                        <Image style={styles.itemImg} source={require('../assets/mainIcon/image66.png')} />
                         <Text style={styles.itemTxt}>Mở tiền gửi số</Text>
                     </View>
-                    <Image style={styles.continueImg} source={require('../assets/mainIcon/Image63.png')} />
+                    <Image style={styles.continueImg} source={require('../assets/mainIcon/image63.png')} />
                 </View>
                 <View style={styles.itemWrapper}>
                     <View style={styles.leftWrapper}>
-                        <Image style={styles.itemImg} source={require('../assets/mainIcon/Image70.png')} />
+                        <Image style={styles.itemImg} source={require('../assets/mainIcon/image70.png')} />
                         <Text style={styles.itemTxt}>Chứng chỉ tiền gửi MB</Text>
                     </View>
-                    <Image style={styles.continueImg} source={require('../assets/mainIcon/Image63.png')} />
+                    <Image style={styles.continueImg} source={require('../assets/mainIcon/image63.png')} />
                 </View>
                 <View style={styles.itemWrapper}>
                     <View style={styles.leftWrapper}>
-                        <Image style={styles.itemImg} source={require('../assets/mainIcon/Image71.png')} />
+                        <Image style={styles.itemImg} source={require('../assets/mainIcon/image71.png')} />
                         <Text style={styles.itemTxt}>Đầu tư quỹ mở MBCapital</Text>
                     </View>
-                    <Image style={styles.continueImg} source={require('../assets/mainIcon/Image63.png')} />
+                    <Image style={styles.continueImg} source={require('../assets/mainIcon/image63.png')} />
                 </View>
             </View>
         </View>

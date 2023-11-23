@@ -1,11 +1,13 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { onPress } from 'deprecated-react-native-prop-types/DeprecatedTextPropTypes';
 
 export default function TransferOptionComponent_Short(props) {
     const { option } = props;
 
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity >
             <View style={styles.container}>
                 <Image source={option.img} style={styles.img} />
                 <Text style={styles.title}>{option.title}</Text>

@@ -1,57 +1,38 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import OptionComponent from '../components/OptionComponent'
-import UseFulnessOptionComponent from '../components/UseFulnessOptionComponent'
-export default function UseFulnessScreen() {
+export default function MBPlusScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Tích điểm đổi quà</Text>
+        <Text style={styles.headerTitle}>MB++</Text>
       </View>
       <View style={styles.options}>
         <FlatList style={styles.flatList}
           data={optionList}
-          renderItem={({ item }) => <UseFulnessOptionComponent option={item}/>}
+          renderItem={({ item }) => <OptionComponent option={item}/>}
           numColumns={1}
           contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
           scrollEnabled={true} />
       </View>
+      <Image 
+        source={require('../assets/banner/banner11.png')}
+        style={styles.banner}
+/>
     </View>
   )
   
 }
 var optionList = [
   {
-    title: 'Đăng nhập bằng khuôn mặt',
-    img: require('../assets/mainIcon/send.png'),
-    toggleSwitch: true,
+    title: 'Ưu đãi',
+    img: require('../assets/mainIcon/image94.png'),
   },
   {
-    title: 'Nhận tiền từ số điện thoại',
-    img: require('../assets/mainIcon/pushCard.png'),
-    toggleSwitch: true,
+    title: 'Mua sắm hoàn tiền',
+    img: require('../assets/mainIcon/image95.png'),
   },
-  {
-    title: 'Hiện thị số thẻ',
-    img: require('../assets/mainIcon/pushCard.png'),
-    toggleSwitch: true,
-  },
-  {
-    title: 'Thiết lập Digital OTP',
-    img: require('../assets/mainIcon/pushCard.png'),
-  },
-  {
-    title: 'Chọn giao diện',
-    img: require('../assets/mainIcon/pushCard.png'),
-  },
-  {
-    title: 'Thông tin nhân viên hỗ trợ',
-    img: require('../assets/mainIcon/pushCard.png'),
-  },
-  {
-    title: 'Đăng kí biến động số dư',
-    img: require('../assets/mainIcon/pushCard.png'),
-  },
+
 ]
 const styles = StyleSheet.create({
   container: {
@@ -84,5 +65,9 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 10,
   },
-
+  banner: {
+    marginTop: 20,
+    width: '90%',
+    height: 130,
+  },
 })

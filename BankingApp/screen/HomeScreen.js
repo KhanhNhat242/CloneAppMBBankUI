@@ -8,6 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 import AccountModal from '../components/AccountModal.js';
 
 export default function HomeScreen(props) {
+    if (!global.setImmediate) {
+        global.setImmediate = function (callback) {
+            return setTimeout(callback, 0);
+        };
+    }
     const { userData } = props.route.params;
     const navigation = useNavigation();
     const adData = [
@@ -39,7 +44,7 @@ export default function HomeScreen(props) {
         navigation.navigate('Helper');
     }
     const goToOptionScreen = (screen) => {
-        navigation.navigate(screen);
+        navigation.navigate(screen, { userData: userData });
     }
     const showAccountModal = () => {
             popupModal();

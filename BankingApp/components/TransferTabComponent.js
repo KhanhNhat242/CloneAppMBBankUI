@@ -3,13 +3,13 @@ import React, {useState} from 'react'
 
 
 export default function TransferTabComponent(props) {
-    const { option, onPress } = props;
-    const {checked, setChecked} = useState(true);
+    const { option, onPress, selectedItem } = props;
+   
 
     return (
         <TouchableOpacity onPress={onPress}>
-            <View style={styles.container}>
-                <Text style={[checked ? styles.checkedTitle : styles.title]}>{option.title}</Text>
+            <View style={[styles.container, {borderColor: selectedItem === option.id? 'blue' : 'gray'}]}>
+                <Text style={[selectedItem === option.id ? styles.checkedTitle : styles.title]}>{option.title}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: 'gray',
         padding: 10,
         margin: 10,
     },

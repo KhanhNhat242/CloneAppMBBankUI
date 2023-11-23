@@ -15,10 +15,17 @@ import TransferMoneyScreen from './TransferMoneyScreen.js';
 import PhoneRechargeScreen from './PhoneRechargeScreen.js';
 import SendMoney from './SendMoneyScreen.js';
 import Pay from './Pay.js';
+import TransferScreen from './TransferScreen.js';
+import SuccessTransfer from './SuccessTransfer.js';
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
+    if (!global.setImmediate) {
+        global.setImmediate = function (callback) {
+            return setTimeout(callback, 0);
+        };
+    }
     return (
         <Tab.Navigator screenOptions={{headerShown:false}}         >
             <Tab.Screen name="Trang chủ" component={Home} options={{
@@ -89,6 +96,9 @@ export default function RootComponent() {
                 <Stack.Screen name="PhoneRecharge" component={PhoneRechargeScreen} />
                 <Stack.Screen name="SendMoney" component={SendMoney} />
                 <Stack.Screen name='Pay' component={Pay} />
+                <Stack.Screen name='Transfer' component={TransferScreen} />
+                <Stack.Screen name='TransferSuccess' component={SuccessTransfer} />
+
             </Stack.Navigator>
         </NavigationContainer>
     )

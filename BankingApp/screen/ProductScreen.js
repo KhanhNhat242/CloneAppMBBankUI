@@ -51,15 +51,15 @@ var optionList = [
   },
   {
     title: 'Dịch vụ trả góp thẻ tín dụng',
-    img: require('../assets/mainIcon/serviceCard.png'),
+    img: require('../assets/mainIcon/image89.png'),
   },
   {
     title: 'Quà tặng',
-    img: require('../assets/mainIcon/serviceCard.png'),
+    img: require('../assets/mainIcon/image90.png'),
   },
   {
     title: 'Dịch vụ thẻ',
-    img: require('../assets/mainIcon/serviceCard.png'),
+    img: require('../assets/mainIcon/image91.png'),
   },
   {
     title: 'Tiền gửi và đầu tư',
@@ -67,11 +67,11 @@ var optionList = [
   },
   {
     title: 'Vay trực tuyến',
-    img: require('../assets/mainIcon/serviceCard.png'),
+    img: require('../assets/mainIcon/image92.png'),
   },
   {
     title: 'Bảo hiểm chứng khoán và vay tiêu dùng',
-    img: require('../assets/mainIcon/serviceCard.png'),
+    img: require('../assets/mainIcon/image93.png'),
   },
   {
     title: 'Ví điện tử',

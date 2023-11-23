@@ -13,51 +13,47 @@ export default function LoginScreen() {
     password: password
   }
 
-  const userData = {
-    userName: 'Nguyen Nhat Khanh',
-    password: '123'
-  }
 
   const [showPassword, setShowPassword] = useState(false)
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   const navigation = useNavigation();
-  // const CheckLogin = () => {
-  //   if (loginData.userName == '' || loginData.password == '') {
-  //     alert('Vui lòng nhập đầy đủ thông tin');
-  //     return;
-  //   }
-  //   else {
-  //     const loginPayload = {
-  //       phone: loginData.userName,
-  //       password: loginData.password,
-  //     };
-  //     fetch('http://localhost:8080/api/auth/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(loginPayload),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         navigation.navigate('Main',  {
-  //           screen: 'Trang chủ',
-  //           params: { userData: data }, });
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error:', error);
-  //       });
-  //   }
-  // }
-
   const CheckLogin = () => {
-    navigation.navigate('Main', {
-      screen: 'Trang chủ',
-      params: { userData: userData }
-    })
+    if (loginData.userName == '' || loginData.password == '') {
+      alert('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+    else {
+      const loginPayload = {
+        phone: loginData.userName,
+        password: loginData.password,
+      };
+      fetch('http://192.168.56.1:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginPayload),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          navigation.navigate('Main',  {
+            screen: 'Trang chủ',
+            params: { userData: data }, });
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   }
+
+  // const CheckLogin = () => {
+  //   navigation.navigate('Main', {
+  //     screen: 'Trang chủ',
+  //     params: { userData: userData }
+  //   })
+  // }
 
   return (
     <View style={styles.container}>

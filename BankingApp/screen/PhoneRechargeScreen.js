@@ -29,7 +29,7 @@ function PhoneRechargeScreen() {
             </View>
             <View style={styles.body}>
                 <TextInput style={styles.phoneInput} placeholder='Nhập số điện thoại' />
-                <Image style={styles.phoneImg} source={require('../assets/mainIcon/Image60.png')}/>
+                <Image style={styles.phoneImg} source={require('../assets/mainIcon/image60.png')}/>
                 <Text style={styles.pickTxt}>Chọn mệnh giá</Text>
                 <View style={{display: 'flex', flexDirection: 'row', marginTop: 10}}>
                     <View style={styles.moneyWrapper}>

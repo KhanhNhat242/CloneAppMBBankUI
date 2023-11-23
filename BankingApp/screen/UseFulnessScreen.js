@@ -1,42 +1,57 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import OptionComponent from '../components/OptionComponent'
-export default function MBPlusScreen() {
+import UseFulnessOptionComponent from '../components/UseFulnessOptionComponent'
+export default function UseFulnessScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>MB++</Text>
+        <Text style={styles.headerTitle}>Tích điểm đổi quà</Text>
       </View>
       <View style={styles.options}>
         <FlatList style={styles.flatList}
           data={optionList}
-          renderItem={({ item }) => <OptionComponent option={item}/>}
+          renderItem={({ item }) => <UseFulnessOptionComponent option={item}/>}
           numColumns={1}
           contentContainerStyle={{ justifyContent: 'space-between', paddingHorizontal: 20 }}
           scrollEnabled={true} />
       </View>
-      <Image 
-        source={require('../assets/banner/banner11.png')}
-        style={styles.banner}
-/>
     </View>
   )
   
 }
 var optionList = [
   {
-    title: 'Ưu đãi',
-    img: require('../assets/mainIcon/send.png'),
+    title: 'Đăng nhập bằng khuôn mặt',
+    img: require('../assets/mainIcon/faceID.png'),
+    toggleSwitch: true,
   },
   {
-    title: 'Mua sắm hoàn tiền',
-    img: require('../assets/mainIcon/pushCard.png'),
+    title: 'Nhận tiền từ số điện thoại',
+    img: require('../assets/mainIcon/image84.png'),
+    toggleSwitch: true,
   },
   {
-    title: 'Quay ong eMB',
-    img: require('../assets/mainIcon/pay.png'),
+    title: 'Hiện thị số thẻ',
+    img: require('../assets/mainIcon/image85.png'),
+    toggleSwitch: true,
   },
-
+  {
+    title: 'Thiết lập Digital OTP',
+    img: require('../assets/mainIcon/otp.png'),
+  },
+  {
+    title: 'Chọn giao diện',
+    img: require('../assets/mainIcon/image86.png'),
+  },
+  {
+    title: 'Thông tin nhân viên hỗ trợ',
+    img: require('../assets/mainIcon/image87.png'),
+  },
+  {
+    title: 'Đăng kí biến động số dư',
+    img: require('../assets/mainIcon/image88.png'),
+  },
 ]
 const styles = StyleSheet.create({
   container: {
@@ -69,9 +84,5 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 10,
   },
-  banner: {
-    marginTop: 20,
-    width: '90%',
-    height: 130,
-  },
+
 })
