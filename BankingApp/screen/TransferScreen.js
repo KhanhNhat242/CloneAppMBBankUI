@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import CustomAlert from '../components/CustomeAlertModal';
 import moment from 'moment';
+import axios from 'axios';
 
 export default function TransferScreen(props) {
     const userData = props.route.params;
@@ -16,6 +17,7 @@ export default function TransferScreen(props) {
     const [money, setMoney] = useState(0);
     const [content, setContent] = useState(`${userData.userData.userData.userName}` + ' chuyen tien');
     const navigation = useNavigation();
+
     const goBack = () => {
         navigation.goBack();
     }
@@ -35,62 +37,88 @@ export default function TransferScreen(props) {
     const handleCloseAlert = () => {
       setShowAlert(false);
     };
-    const CheckEnoughMoney = () => {
-        if (parseFloat(money) > parseFloat(userData.userData.userData.balance)) {
-            setCheckMoney(false);
-            return false;
-        }
-        else {
-            setCheckMoney(true);
-            return true;
-        }
-    }
 
-    const handleTransfer = () => {
-        if (CheckEnoughMoney()) {
-            const transferPayload = {
-                noiDungCK: content,
-                soTien: money,
-                stkNhan: stk,
-                stkNguon: userData.userData.userData.phone,
-            };
-            fetch('http://192.168.56.1:8080/api/transfer/transfer_money', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(transferPayload),
-            }).then((response) => {
-                if (!response.ok) {
-                    // Xử lý lỗi dựa trên mã trạng thái
-                    if (response.status === 400) {
-                        handleShowAlert();
-                        return response.text();
+    // const CheckEnoughMoney = () => {
+    //     if (parseFloat(money) > parseFloat(userData.userData.userData.balance)) {
+    //         setCheckMoney(false);
+    //         return false;
+    //     }
+    //     else {
+    //         setCheckMoney(true);
+    //         return true;
+    //     }
+    // }
+
+    // const handleTransfer = () => {
+    //     if (CheckEnoughMoney()) {
+    //         const transferPayload = {
+    //             noiDungCK: content,
+    //             soTien: money,
+    //             stkNhan: stk,
+    //             stkNguon: userData.userData.userData.phone,
+    //         };
+    //         fetch('http://192.168.56.1:8080/api/transfer/transfer_money', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(transferPayload),
+    //         }).then((response) => {
+    //             if (!response.ok) {
+    //                 // Xử lý lỗi dựa trên mã trạng thái
+    //                 if (response.status === 400) {
+    //                     handleShowAlert();
+    //                     return response.text();
 
                         
-                        // hoặc .json() tùy thuộc vào định dạng phản hồi
-                    }
-                }
-                else{
-                    userData.userData.userData.balance = parseFloat(userData.userData.userData.balance) - parseFloat(money);
-                    const currentTime = moment();
-                    const formattedTime = currentTime.format('DD/MM/YYYY HH:mm:ss');
+    //                     // hoặc .json() tùy thuộc vào định dạng phản hồi
+    //                 }
+    //             }
+    //             else{
+    //                 userData.userData.userData.balance = parseFloat(userData.userData.userData.balance) - parseFloat(money);
+    //                 const currentTime = moment();
+    //                 const formattedTime = currentTime.format('DD/MM/YYYY HH:mm:ss');
 
-                    navigation.navigate('TransferSuccess', {
-                        params: { userData: userData.userData.userData, transferPayload, formattedTime },
-                    });
-                }
-                return response.json();
-            })
-                .catch((error) => {
-                });
+    //                 navigation.navigate('TransferSuccess', {
+    //                     params: { userData: userData.userData.userData, transferPayload, formattedTime },
+    //                 });
+    //             }
+    //             return response.json();
+    //         })
+    //             .catch((error) => {
+    //             });
+    //     }
+    // }
+
+    const handleTransfer = async () => {
+        const accountSource = userData.userData.userData.phone.toString()
+
+        if(money > userData.userData.userData.balance){
+            setCheckMoney(false)
         }
+        else {
+            const res = await axios.post('http://localhost:8080/api/transfer/transferMoney', null, {params: { money, accountSource, stk, content }})   
+                    
+            if(res.data){
+                navigation.navigate('TransferSuccess')
+            }
+            else if(res.response.status == 500){
+                alert('Fail')
+            }
+        }
+    }   
 
-    }
-    const moneyText = (val) => {
-        setMoney(val);
-        CheckEnoughMoney();
-    }
+    // const CheckEnoughMoney = () => {
+    //     if(money > userData.userData.userData.money)
+    //         setCheckMoney(false)
+    //     else 
+    //         setCheckMoney(true)
+    // }
+
+    // const moneyText = (money) => {
+    //     setMoney(money);
+    //     CheckEnoughMoney();
+    // }
 
     return (
         <View style={styles.container}>
@@ -141,13 +169,13 @@ export default function TransferScreen(props) {
                     <Text style={{ margin: 10, fontSize: 16 }}>Số tài khoản:</Text>
                 </View>
                 <View style={{ width: "100%", alignItems: 'center' }}>
-                    <TextInput placeholder="Số tài khoản" style={styles.stk} onChangeText={setStk} />
+                    <TextInput placeholder="Số tài khoản" style={styles.stk} value={stk} onChangeText={setStk} />
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '100%' }}>
                     <Text style={{ margin: 10, fontSize: 16 }}>Số tiền chuyển:</Text>
                 </View>
                 <View style={{ width: "100%", alignItems: 'center' }}>
-                    <TextInput placeholder="Nhập số tiền" style={styles.stk} keyboardType="numeric" onChangeText={moneyText} />
+                    <TextInput placeholder="Nhập số tiền" style={styles.stk} keyboardType="numeric" onChangeText={setMoney} value={money} />
                 </View>
                 {checkMoney ? null : <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '100%', marginLeft: 35 }}>
                     <Text style={{ margin: 5, fontSize: 16, color: 'red' }}>Số tiền trong tài khoản không đủ</Text>
@@ -243,6 +271,4 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 10,
     }
-
-
 })
