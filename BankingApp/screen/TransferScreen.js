@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import CustomAlert from '../components/CustomeAlertModal';
 import axios from 'axios';
+import SubHeader from '../components/SubHeader';
 
 export default function TransferScreen(props) {
     const userData = props.route.params.userData
@@ -17,13 +18,7 @@ export default function TransferScreen(props) {
     const [content, setContent] = useState(`${userData.userName}` + ' chuyen tien');
     
     const navigation = useNavigation();
-
-    const goBack = () => {
-        navigation.goBack();
-    }
-    const goHome = () => {
-        navigation.navigate('Main');
-    }
+    
     const data = [
         { key: '1', value: 'MB Bank' },
 
@@ -58,21 +53,7 @@ export default function TransferScreen(props) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={goBack}>
-                    <Image
-                        source={require('../assets/mainIcon/back.png')}
-                        style={{ width: 15, height: 15, margin: 10, resizeMode: 'contain' }}
-                    />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Chuyển tiền</Text>
-                <TouchableOpacity onPress={goHome}>
-                    <Image
-                        source={require('../assets/mainIcon/home.png')}
-                        style={{ width: 20, height: 20, margin: 10, resizeMode: 'contain' }}
-                    />
-                </TouchableOpacity>
-            </View>
+            <SubHeader title={'Chuyển tiền'} />
             <View style={styles.body}>
                 <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '100%' }}>
                     <Text style={{ margin: 10, fontSize: 16 }}>Từ tài khoản nguồn</Text>
@@ -142,22 +123,6 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#F7F7F7',
         alignItems: 'center',
-    },
-    header: {
-        height: '10%',
-        width: '100%',
-        backgroundColor: '#1D00D4',
-        alignItems: 'flex-end',
-        paddingBottom: 10,
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'white',
-        marginBottom: 5
     },
     body: {
         width: '100%',

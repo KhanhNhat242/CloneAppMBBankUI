@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import SubHeader from '../components/SubHeader';
 
 export default function ( props ) {
     const [transaction, setTransaction] = useState([])
@@ -9,13 +10,6 @@ export default function ( props ) {
     const navigation = useNavigation();
 
     const {userData} = props.route.params
-
-    const goBack = () => {
-        navigation.goBack();
-    }
-    const goHome = () => {
-        navigation.navigate('Main');
-    }
 
     const getData = async () => {
         const res = await axios.get('http://localhost:8080/api/transfer/getAllTransaction')
@@ -54,21 +48,7 @@ export default function ( props ) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={goBack}>
-                    <Image
-                        source={require('../assets/mainIcon/back.png')}
-                        style={{ width: 15, height: 15, margin: 10, resizeMode: 'contain' }}
-                    />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Thông báo</Text>
-                <TouchableOpacity onPress={goHome}>
-                    <Image
-                        source={require('../assets/mainIcon/home.png')}
-                        style={{ width: 20, height: 20, margin: 10, resizeMode: 'contain' }}
-                    />
-                </TouchableOpacity>
-            </View>
+            <SubHeader title={'Thông báo'} />
             <Text style={styles.title}>Biến động số dư</Text>
             {
                 transaction.map((t) => {
@@ -93,22 +73,6 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#F7F7F7',
         alignItems: 'center',
-    },
-    header: {
-        height: '10%',
-        width: '100%',
-        backgroundColor: '#1D00D4',
-        alignItems: 'flex-end',
-        paddingBottom: 10,
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'white',
-        marginBottom: 5
     },
     title: {
         textAlign: 'center',

@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
-import OptionComponent from '../components/OptionComponent'
+import React from 'react'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
 import UseFulnessOptionComponent from '../components/UseFulnessOptionComponent'
 export default function UseFulnessScreen() {
   return (
