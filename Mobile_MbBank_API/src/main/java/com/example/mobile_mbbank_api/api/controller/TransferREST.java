@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -86,6 +87,11 @@ public class TransferREST {
 
             return true;
         }
+    }
+
+    @GetMapping("/getAllTransaction")
+    public List<Transfer> getAllTransaction() {
+        return transferService.getAll();
     }
 }
 

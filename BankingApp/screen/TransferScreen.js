@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
-
+import React from 'react'
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import CustomAlert from '../components/CustomeAlertModal';
-import moment from 'moment';
 import axios from 'axios';
 
 export default function TransferScreen(props) {
-    const userData = props.route.params;
+    const userData = props.route.params.userData
+
     const [checkMoney, setCheckMoney] = useState(true);
     const [mess, setMess] = useState('');
-    const [selected, setSelected] = React.useState("");
+    const [selected, setSelected] = useState("");
     const [stk, setStk] = useState('');
     const [money, setMoney] = useState(0);
-    const [content, setContent] = useState(`${userData.userData.userData.userName}` + ' chuyen tien');
+    const [content, setContent] = useState(`${userData.userName}` + ' chuyen tien');
+    
     const navigation = useNavigation();
 
     const goBack = () => {
@@ -38,62 +38,10 @@ export default function TransferScreen(props) {
       setShowAlert(false);
     };
 
-    // const CheckEnoughMoney = () => {
-    //     if (parseFloat(money) > parseFloat(userData.userData.userData.balance)) {
-    //         setCheckMoney(false);
-    //         return false;
-    //     }
-    //     else {
-    //         setCheckMoney(true);
-    //         return true;
-    //     }
-    // }
-
-    // const handleTransfer = () => {
-    //     if (CheckEnoughMoney()) {
-    //         const transferPayload = {
-    //             noiDungCK: content,
-    //             soTien: money,
-    //             stkNhan: stk,
-    //             stkNguon: userData.userData.userData.phone,
-    //         };
-    //         fetch('http://192.168.56.1:8080/api/transfer/transfer_money', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(transferPayload),
-    //         }).then((response) => {
-    //             if (!response.ok) {
-    //                 // Xử lý lỗi dựa trên mã trạng thái
-    //                 if (response.status === 400) {
-    //                     handleShowAlert();
-    //                     return response.text();
-
-                        
-    //                     // hoặc .json() tùy thuộc vào định dạng phản hồi
-    //                 }
-    //             }
-    //             else{
-    //                 userData.userData.userData.balance = parseFloat(userData.userData.userData.balance) - parseFloat(money);
-    //                 const currentTime = moment();
-    //                 const formattedTime = currentTime.format('DD/MM/YYYY HH:mm:ss');
-
-    //                 navigation.navigate('TransferSuccess', {
-    //                     params: { userData: userData.userData.userData, transferPayload, formattedTime },
-    //                 });
-    //             }
-    //             return response.json();
-    //         })
-    //             .catch((error) => {
-    //             });
-    //     }
-    // }
-
     const handleTransfer = async () => {
-        const accountSource = userData.userData.userData.phone.toString()
+        const accountSource = userData.phone
 
-        if(money > userData.userData.userData.balance){
+        if(money > userData.balance){
             setCheckMoney(false)
         }
         else {
@@ -107,18 +55,6 @@ export default function TransferScreen(props) {
             }
         }
     }   
-
-    // const CheckEnoughMoney = () => {
-    //     if(money > userData.userData.userData.money)
-    //         setCheckMoney(false)
-    //     else 
-    //         setCheckMoney(true)
-    // }
-
-    // const moneyText = (money) => {
-    //     setMoney(money);
-    //     CheckEnoughMoney();
-    // }
 
     return (
         <View style={styles.container}>
@@ -146,10 +82,10 @@ export default function TransferScreen(props) {
                     <Image source={require('../assets/mainIcon/logo.png')} style={{ height: 20, width: 50, margin: 10 }} />
                     <View>
                         <View>
-                            <Text style={{ fontSize: 16, marginLeft: 10, textTransform: 'uppercase' }}>{userData.userData.userData.phone} - {userData.userData.userData.userName}</Text>
+                            <Text style={{ fontSize: 16, marginLeft: 10, textTransform: 'uppercase' }}>{userData.phone} - {userData.userName}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                            <Text style={{ fontSize: 26, marginLeft: 10, fontWeight: 'bold' }}>{userData.userData.userData.balance} </Text>
+                            <Text style={{ fontSize: 26, marginLeft: 10, fontWeight: 'bold' }}>{userData.balance} </Text>
                             <Text style={{ fontSize: 16 }}>VND</Text>
                         </View>
                     </View>

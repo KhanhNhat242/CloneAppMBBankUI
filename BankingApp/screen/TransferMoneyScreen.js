@@ -7,22 +7,30 @@ import { useNavigation } from '@react-navigation/native';
 import TransferOptionComponent_Short from '../components/TransferOptionComponent_Short'
 import TransferTabComponent from '../components/TransferTabComponent'
 import { useState } from 'react';
+
 export default function TransferMoneyScreen(props) {
-    const userData = props.route.params;   
+    const userData = props.route.params.userData;   
     const [data, setData] = useState(optionList);
     const [selectedItem, setSelectedItem] = useState(null);
+
     const navigation = useNavigation();
+
     const goBack = () => {
         navigation.goBack();
     }
+
     const goHome = () => {
         navigation.navigate('Main');
     }
+
     const handleOptionPress = (itemId) => {
         setSelectedItem(itemId);
-      };
+    }
+
     const goToTransfer = () => {
-        navigation.navigate('Transfer', { userData })}
+        navigation.navigate('Transfer', { userData: userData })
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
