@@ -4,7 +4,8 @@ import SubHeader from '../components/SubHeader';
 import { useNavigation } from '@react-navigation/native';
 
 function SuccessTransfer(props) {
-  const data = props.route.params;
+  const data = props.route.params.data
+  const userData = props.route.params.userData
   const navigation = useNavigation();
   function formatCurrencyVND(value) {
     // Chuyển đổi giá trị thành số và kiểm tra tính hợp lệ
@@ -18,12 +19,12 @@ function SuccessTransfer(props) {
 
     return formattedValue;
   }
-    const handleNewTrans = () => {
-        navigation.navigate('Transfer')
-    }
-    const handleGoToHome = () => {
-        navigation.navigate('Main')
-    }
+  const handleNewTrans = () => {
+    navigation.navigate('Transfer', { userData: userData })
+  }
+  const handleGoToHome = () => {
+    navigation.navigate('Main', userData)
+  }
   return (
     <View style={styles.container}>
       <SubHeader title={'Thành công'} />

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,8 @@ public class TransferREST {
 
             userGet.setBalance(userGet.getBalance() + money);
             userSource.setBalance(userSource.getBalance() - money);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+            String formattedDate = sdf.format(currentDate);
 
             Transfer t = new Transfer(currentDate, accountSource, accountGet, money, content);
 
