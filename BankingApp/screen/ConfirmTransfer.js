@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import SubHeader from '../components/SubHeader';
-import { useNavigation } from '@react-navigation/native';
+import SubHeader from '../components/SubHeader'
+import { TouchableOpacity } from 'react-native'
+import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
 
-function SuccessTransfer(props) {
+const ConfirmTransfer = (props) => {
   const data = props.route.params.data
   const userData = props.route.params.userData
+
   const navigation = useNavigation();
   function formatCurrencyVND(value) {
     // Chuyển đổi giá trị thành số và kiểm tra tính hợp lệ
@@ -19,24 +22,34 @@ function SuccessTransfer(props) {
 
     return formattedValue;
   }
-  const handleNewTrans = () => {
-    navigation.navigate('Transfer', { userData: userData })
+
+  const handleTransfer = async () => {
+    const res = await axios.post('http://192.168.56.1:8080/api/transfer/transferMoney', null, { params: { money: data.money, accountSource: data.stkNguon, stk: data.stkNhan, content: data.content } })
+    userData.balance = parseFloat(userData.balance) - parseFloat(data.money)
+    if (res.data) {
+      navigation.navigate('TransferSuccess', { data: data, userData: userData })
+    }
+    else if (res.response.status == 500) {
+      alert('Fail')
+    }
   }
-  const handleGoToHome = () => {
-    navigation.navigate('Main', userData)
-  }
+
+  const handleCancel = () => { }
   return (
     <View style={styles.container}>
-      <SubHeader title={'Thành công'} />
-      <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'blue', marginVertical: 20 }}>Giao dịch thành công</Text>
+      <SubHeader title={"Xác nhận giao dịch"} />
+      <Text style={styles.title}>Thông tin giao dịch</Text>
       <View style={styles.wrapper}>
-        <View style={{ flexDirection: 'row', width: '100%', padding: 10, alignItems: 'flex-start', borderColor: 'gray', borderBottomWidth: 1, height: 60 }}>
+        <View style={{ flexDirection: 'row', width: '100%', padding: 10, alignItems: 'flex-start', borderColor: 'gray', borderBottomWidth: 1, height: 60, alignItems: 'center' }}>
           <Text style={styles.text}>Tài khoản nguồn: </Text>
           <Text style={styles.data}>{data.stkNguon}</Text>
         </View>
-        <View style={{ flexDirection: 'row', width: '100%', padding: 10, alignItems: 'flex-start', borderColor: 'gray', borderBottomWidth: 1, height: 60 }}>
-          <Text style={styles.text}>Số tiền: </Text>
-          <Text style={styles.data}>{formatCurrencyVND(data.money)}</Text>
+        <View style={{ width: '100%', padding: 10, alignItems: 'flex-start', borderColor: 'gray', borderBottomWidth: 1 }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.text}>Số tiền: </Text>
+            <Text style={styles.data}>{formatCurrencyVND(data.money)}</Text>
+          </View>
+          <Text style={[styles.data, {textTransform: 'uppercase', width: '100%'}]}>{data.vietnamese}</Text>
         </View>
         <View style={{ flexDirection: 'row', width: '100%', padding: 10, alignItems: 'flex-start', borderColor: 'gray', borderBottomWidth: 1, height: 60, alignItems: 'center' }}>
           <Text style={styles.text}>Tài khoản nhận: </Text>
@@ -46,25 +59,24 @@ function SuccessTransfer(props) {
           <Text style={styles.text}>Nội dung chuyển khoản: {'\n'} </Text>
           <Text style={styles.data}>{data.content}</Text>
         </View>
+
       </View>
-      <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'center', padding: 10 }}>
-        <TouchableOpacity style={styles.btnNewTrans} onPress={handleNewTrans}>
-          <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>Giao dịch mới</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnHome} onPress={handleGoToHome}>
-          <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>Về trang chủ</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.btnXN} onPress={handleTransfer}>
+        <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>Xác nhận</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnCancel} onPress={handleCancel}>
+        <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>Hủy</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
-export default SuccessTransfer
+export default ConfirmTransfer
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
     alignItems: 'center',
   },
   title: {
@@ -82,9 +94,9 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 1,
     borderRadius: 10,
+    margin: 10,
     borderWidth: 1,
     padding: 10,
-    marginVertical: 20
   },
   text: {
     fontSize: 16,
@@ -98,22 +110,22 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     width: '60%',
   },
-  btnNewTrans: {
-    width: '50%',
+  btnXN: {
+    width: '90%',
     height: 50,
-    backgroundColor: 'blue',
+    backgroundColor: '#1D00D4',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     margin: 10,
   },
-  btnHome: {
-    width: '50%',
+  btnCancel: {
+    width: '90%',
     height: 50,
     backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     margin: 10,
-  },
+  }
 })

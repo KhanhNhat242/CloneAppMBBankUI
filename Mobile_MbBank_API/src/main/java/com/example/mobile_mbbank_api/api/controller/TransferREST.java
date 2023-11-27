@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -35,18 +36,20 @@ public class TransferREST {
     @PostMapping("/transferMoney")
     @Transactional
     @ResponseBody
-    public boolean transferMoney(@RequestParam double money, @RequestParam String accountSource, @RequestParam(name = "stk") String accountGet, @RequestParam String content){
+    public Transfer transferMoney(@RequestParam double money, @RequestParam String accountSource, @RequestParam(name = "stk") String accountGet, @RequestParam String content){
         User userGet = userService.findByPhone(accountGet);
         User userSource = userService.findByPhone(accountSource);
 
         if(userGet == null){
-            return false;
+            return null;
         }
         else{
             Date currentDate = new Date();
 
             userGet.setBalance(userGet.getBalance() + money);
             userSource.setBalance(userSource.getBalance() - money);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+            String formattedDate = sdf.format(currentDate);
 
             Transfer t = new Transfer(currentDate, accountSource, accountGet, money, content);
 
@@ -54,13 +57,24 @@ public class TransferREST {
             userService.createOrUpdate(userSource);
             transferService.createOrUpdate(t);
 
-            return true;
+            return t;
         }
     }
 
     @GetMapping("/getAllTransaction")
     public List<Transfer> getAllTransaction() {
         return transferService.getAll();
+    }
+    @GetMapping("/getUserGet")
+    @Transactional
+    @ResponseBody
+    public User getUserGet(@RequestParam(name = "stk") String accountGet){
+        User user = userService.findByPhone(accountGet);
+        System.out.println(user);
+        if(user==null){
+            return null;
+        }
+        return user;
     }
 }
 

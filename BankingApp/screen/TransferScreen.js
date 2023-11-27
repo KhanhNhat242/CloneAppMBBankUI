@@ -1,21 +1,24 @@
 import React from 'react'
 import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import CustomAlert from '../components/CustomeAlertModal';
 import axios from 'axios';
 import SubHeader from '../components/SubHeader';
+import to_vietnamese from '../convertNumber';
 
 export default function TransferScreen(props) {
+ 
     const userData = props.route.params.userData
 
     const [checkMoney, setCheckMoney] = useState(true);
     const [mess, setMess] = useState('');
     const [selected, setSelected] = useState("");
     const [stk, setStk] = useState('');
-    const [money, setMoney] = useState(0);
-    const [content, setContent] = useState(`${userData.userName}` + ' chuyen tien');
+    const [money, setMoney] = useState();
+    var name = removeAccents(userData.userName);
+    const [content, setContent] = useState(name + ' chuyen tien');
     
     const navigation = useNavigation();
     
@@ -23,33 +26,61 @@ export default function TransferScreen(props) {
         { key: '1', value: 'MB Bank' },
 
     ]
-    const [showAlert, setShowAlert] = useState(false);
+    const CheckEnoughMoney = (newMoney) => {
 
-    const handleShowAlert = () => {
-      setShowAlert(true);
-    };
-  
-    const handleCloseAlert = () => {
-      setShowAlert(false);
-    };
+        if (parseFloat(newMoney) > parseFloat(userData.balance)) {
+            setCheckMoney(false);
+            return false;
+        } else {
+            setCheckMoney(true);
+            return true;
+        }
+    }
+    
+    const moneyText = (val) => {
+        const filteredText = val.replace(/[^0-9]/g, '');
+        setMoney(filteredText);
+    }
+    
+    useEffect(() => {
+        CheckEnoughMoney(money);
+    }, [money, userData.balance]);
+    function formatCurrencyVND(value) {
+        // Chuyển đổi giá trị thành số và kiểm tra tính hợp lệ
+        const parsedValue = parseFloat(value);
+        if (isNaN(parsedValue)) {
+          return "Giá trị không hợp lệ";
+        }
+    
+        // Sử dụng hàm toLocaleString để định dạng tiền tệ
+        const formattedValue = parsedValue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    
+        return formattedValue;
+      }
 
     const handleTransfer = async () => {
         const accountSource = userData.phone
-
-        if(money > userData.balance){
-            setCheckMoney(false)
-        }
-        else {
-            const res = await axios.post('http://localhost:8080/api/transfer/transferMoney', null, {params: { money, accountSource, stk, content }})   
-                    
-            if(res.data){
-                navigation.navigate('TransferSuccess')
+            const res = await axios.get('http://192.168.56.1:8080/api/transfer/getUserGet', {params: {stk: stk}})   
+            if(res.data.username!==undefined){
+                const data = {
+                    stkNguon: accountSource,
+                    stkNhan: stk,
+                    money: money,
+                    content: content,
+                    vietnamese: to_vietnamese(money)
+                }
+               navigation.navigate('ConfirmTransfer', {data: data, userData: userData})
             }
-            else if(res.response.status == 500){
-                alert('Fail')
+            else{
+                alert('Không tìm thấy tài khoản đối ứng')
             }
-        }
-    }   
+        
+    }  
+    function removeAccents(str) {
+        return str.normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+      }
 
     return (
         <View style={styles.container}>
@@ -92,10 +123,13 @@ export default function TransferScreen(props) {
                     <Text style={{ margin: 10, fontSize: 16 }}>Số tiền chuyển:</Text>
                 </View>
                 <View style={{ width: "100%", alignItems: 'center' }}>
-                    <TextInput placeholder="Nhập số tiền" style={styles.stk} keyboardType="numeric" onChangeText={setMoney} value={money} />
+                    <TextInput placeholder="Nhập số tiền" style={styles.stk} keyboardType="numeric" onChangeText={moneyText} value={money}/>
                 </View>
                 {checkMoney ? null : <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '100%', marginLeft: 35 }}>
                     <Text style={{ margin: 5, fontSize: 16, color: 'red' }}>Số tiền trong tài khoản không đủ</Text>
+                </View>}
+                {money.length<1 ? null : <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '100%', marginLeft: 35 }}>
+                    <Text style={{ margin: 5, fontSize: 16, color: 'gray',textTransform: 'uppercase'  }}>{to_vietnamese(money)} đồng</Text>
                 </View>}
                 <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '100%' }}>
                     <Text style={{ margin: 10, fontSize: 16 }}>Nội dung chuyển tiền</Text>
@@ -104,17 +138,13 @@ export default function TransferScreen(props) {
                     <TextInput style={styles.stk} onChangeText={setContent} value={content} />
                 </View>
             </View>
-            <CustomAlert
-                visible={showAlert}
-                title="Chuyển tiền thất bại"
-                message="Không tìm thấy tài khoản đối ứng"
-                onClose={handleCloseAlert}
-            />
+    
             <TouchableOpacity style={styles.btn} onPress={handleTransfer}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>Tiếp tục</Text>
             </TouchableOpacity>
         </View>
     )
+    
 }
 
 const styles = StyleSheet.create({
