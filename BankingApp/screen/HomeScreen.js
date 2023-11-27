@@ -64,7 +64,6 @@ export default function HomeScreen(props) {
                 <ImageBackground
                     source={require('../assets/background.png')}
                     style={styles.imageBackground}>
-
                     <View style={[styles.header, {height: 250}]}>
                         <View style={styles.menuHeader}>
                             <TouchableOpacity style={{ height: 24, width: 24, margin: 10 }} onPress={togglePopup}>
@@ -100,7 +99,7 @@ export default function HomeScreen(props) {
                     </View>
                     
                     <View style={{ width: '100%', height: 'auto'}}>
-                            {isVisible ? <AccountModal  onClose={popupModal} userData={userData} style={{height: 540, zIndex: 1}} />
+                            {isVisible ? <AccountModal  onClose={popupModal} userData={userData} flagg={1} style={{height: 540, zIndex: 1}} />
                             : null}
                         </View>
                         <TouchableOpacity style={[styles.circle, {top: isVisible ? 765 : 225}]} onPress={showAccountModal}>

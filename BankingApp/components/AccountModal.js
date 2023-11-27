@@ -1,9 +1,18 @@
 import { View, Text, Modal, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AccountOptionComponent from './AccountOptionComponent'
 import { Ionicons } from '@expo/vector-icons';
 
-export default function AccountModal({ isVisible, onClose, userData }) {
+export default function AccountModal({ isVisible, onClose, userData, flagg }) {
+    const [flag, setFlag] = useState(0)
+
+    console.log(flagg)
+
+    useEffect(() => {
+        if(flagg == 1)
+            setFlag(2)
+    }, [])
+
     return (
         // <Modal
         //     transparent={true}
