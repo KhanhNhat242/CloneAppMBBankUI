@@ -36,13 +36,22 @@ export default function ( props ) {
         getData()
     }, [])
 
-    // console.log(transaction)
-
+    
     if(transaction.length > 1){
         transaction?.sort((a, b) => {
-            const d1 = parseInt(a.time.slice(9, 11))
-            const d2 = parseInt(b.time.slice(9, 11))
-            return d2 - d1
+            let year1 = parseInt(a.time.slice(0, 5))
+            let year2 = parseInt(b.time.slice(0, 5))
+            let month1 = parseInt(a.time.slice(5, 7))
+            let month2 = parseInt(b.time.slice(5, 7))
+            let day1 = parseInt(a.time.slice(8, 10))
+            let day2 = parseInt(b.time.slice(8, 10))
+
+            if(year1 != year2)
+                return  year2 - year1
+            else if(month1 != month2)
+                return month2 - month1
+            else if(day1 != day2)
+                return day2 - day1
         })
     }
 
