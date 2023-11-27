@@ -17,6 +17,7 @@ import SendMoney from './SendMoneyScreen.js';
 import Pay from './Pay.js';
 import TransferScreen from './TransferScreen.js';
 import SuccessTransfer from './SuccessTransfer.js';
+import NotifyScreen from './NotifyScreen.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -97,8 +98,8 @@ export default function RootComponent() {
                 <Stack.Screen name="SendMoney" component={SendMoney} />
                 <Stack.Screen name='Pay' component={Pay} />
                 <Stack.Screen name='Transfer' component={TransferScreen} />
-                <Stack.Screen name='TransferSuccess' component={SuccessTransfer} />
-
+                <Stack.Screen name='TransferSuccess' component={SuccessTransfer} />    
+                <Stack.Screen name='Notify' component={NotifyScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

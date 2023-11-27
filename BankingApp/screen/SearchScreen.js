@@ -1,34 +1,12 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
-import OptionComponent from '../components/OptionComponent'
-import UseFulnessOptionComponent from '../components/UseFulnessOptionComponent'
+import React from 'react'
+import { Text, View, StyleSheet, Image, TextInput, FlatList } from 'react-native'
 import MainOptionComponent from '../components/MainOptionComponent'
-import { useNavigation } from '@react-navigation/native';
+import SubHeader from '../components/SubHeader'
+
 export default function SearchScreen() {
-  const navigation = useNavigation();
-  const goBack = () => {
-    navigation.goBack();
-  }
-  const goHome = () => {
-    navigation.navigate('Main');
-  }
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goBack}>
-          <Image
-            source={require('../assets/mainIcon/back.png')}
-            style={{ width: 15, height: 15, margin: 10, resizeMode: 'contain' }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Tìm kiếm</Text>
-        <TouchableOpacity onPress={goHome}>
-          <Image
-            source={require('../assets/mainIcon/home.png')}
-            style={{ width: 20, height: 20, margin: 10, resizeMode: 'contain' }}
-          />
-        </TouchableOpacity>
-      </View>
+      <SubHeader title={'Tìm kiếm'} />
       <View style={styles.body}>
         <View style={styles.searchWrapper}>
           <Image source={require('../assets/mainIcon/searchBlue.png')}
@@ -105,22 +83,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     position: 'sticky',
-  },
-  header: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: '#1D00D4',
-    alignItems: 'flex-end',
-    paddingBottom: 10,
-    justifyContent: 'space-between',
-    flexDirection: 'row'
-
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 5
   },
   body: {
     width: '100%',

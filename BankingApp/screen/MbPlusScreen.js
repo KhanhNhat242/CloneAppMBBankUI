@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import OptionComponent from '../components/OptionComponent'
+
 export default function MBPlusScreen() {
   return (
     <View style={styles.container}>

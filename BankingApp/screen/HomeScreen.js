@@ -36,16 +36,24 @@ export default function HomeScreen(props) {
 
     const togglePopup = () => {
         setPopupVisible(!isPopupVisible);
-    };
+    }
+
     const goToSearch = () => {
         navigation.navigate('Search');
     }
+
     const goToHelper = () => {
         navigation.navigate('Helper');
     }
+
+    const goToNotify = () => {
+        navigation.navigate('Notify', { userData: userData })
+    }
+
     const goToOptionScreen = (screen) => {
         navigation.navigate(screen, { userData: userData });
     }
+
     const showAccountModal = () => {
             popupModal();
             setShow(!isShow);
@@ -79,7 +87,7 @@ export default function HomeScreen(props) {
                                     style={{ height: 24, width: 24, resizeMode: 'contain' }}
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ height: 24, width: 24, margin: 10 }}>
+                            <TouchableOpacity style={{ height: 24, width: 24, margin: 10 }} onPress={goToNotify}>
                                 <Image
                                     source={require('../assets/mainIcon/bell.png')}
                                     style={{ height: 24, width: 24, resizeMode: 'contain' }}

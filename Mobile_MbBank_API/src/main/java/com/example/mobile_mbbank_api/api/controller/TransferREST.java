@@ -8,6 +8,7 @@ import com.example.mobile_mbbank_api.api.model.Transfer;
 import com.example.mobile_mbbank_api.api.model.User;
 import com.example.mobile_mbbank_api.api.repository.TransferRepository;
 import com.example.mobile_mbbank_api.api.repository.UserRepository;
+import com.example.mobile_mbbank_api.api.service.TransferService;
 import com.example.mobile_mbbank_api.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,45 +21,46 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/transfer")
 public class TransferREST {
     @Autowired
-    TransferRepository transferRepository;
+    private TransferService transferService;
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    private UserService service;
-    @PostMapping("/transfer_money")
+    private UserService userService;
+
+    @PostMapping("/transferMoney")
     @Transactional
-    public ResponseEntity<?> transfer(@Valid @RequestBody TransferDTO dto) {
-        Date currentDate = new Date();
+    @ResponseBody
+    public boolean transferMoney(@RequestParam double money, @RequestParam String accountSource, @RequestParam(name = "stk") String accountGet, @RequestParam String content){
+        User userGet = userService.findByPhone(accountGet);
+        User userSource = userService.findByPhone(accountSource);
 
-        Transfer transfer = new Transfer(currentDate,dto.getStkNguon(), dto.getStkNhan(), dto.getSoTien(), dto.getNoiDungCK());
-        Optional<User> accountSource = userRepository.findByPhone(transfer.getStkNguon());
-        User userSource = accountSource.orElse(null);
-        Optional<User> account = userRepository.findByPhone(transfer.getStkNhan());
-        User user = account.orElse(null);
-        if(user==null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Không tìm thấy tài khoản ");
-        }
-
-        if(userSource.getBalance()>transfer.getSoTien()){
-            userSource.setBalance(userSource.getBalance()-transfer.getSoTien());
-            user.setBalance(user.getBalance()+transfer.getSoTien());
-
-            userRepository.save(userSource);
-            userRepository.save(user);
+        if(userGet == null){
+            return false;
         }
         else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Số tiền trong tài khoản không đủ");
+            Date currentDate = new Date();
+
+            userGet.setBalance(userGet.getBalance() + money);
+            userSource.setBalance(userSource.getBalance() - money);
+
+            Transfer t = new Transfer(currentDate, accountSource, accountGet, money, content);
+
+            userService.createOrUpdate(userGet);
+            userService.createOrUpdate(userSource);
+            transferService.createOrUpdate(t);
+
+            return true;
         }
+    }
 
-
-
-        transferRepository.save(transfer);
-        return ResponseEntity.ok("Success");
+    @GetMapping("/getAllTransaction")
+    public List<Transfer> getAllTransaction() {
+        return transferService.getAll();
     }
 }
+

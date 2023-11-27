@@ -30,4 +30,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("user name not found"));
     }
 
+    public User findByPhone(String p){
+        return userRepository.findByPhone(p).get();
+    }
+
+    public void createOrUpdate(User u){
+        userRepository.save(u);
+    }
 }

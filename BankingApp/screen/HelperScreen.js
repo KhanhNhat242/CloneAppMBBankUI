@@ -5,6 +5,8 @@ import UseFulnessOptionComponent from '../components/UseFulnessOptionComponent'
 import MainOptionComponent from '../components/MainOptionComponent'
 import { useNavigation } from '@react-navigation/native';
 import HelperComponent from '../components/HelperComponent'
+import SubHeader from '../components/SubHeader'
+
 export default function HelperScreen() {
   const navigation = useNavigation();
   const goBack = () => {
@@ -12,15 +14,7 @@ export default function HelperScreen() {
   }
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goBack} style={{position:'absolute', left: 10, bottom: 10}}>
-          <Image
-            source={require('../assets/mainIcon/back.png')}
-            style={{ width: 15, height: 15, margin: 5, resizeMode: 'contain' }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>eMBee Helper</Text>
-      </View>
+      <SubHeader title={'eMBee Helper'} />
       <View style={styles.body}>
         <Text style={styles.title}>Hãy để eMBee hỗ trợ bạn</Text>
         <View style={styles.options}>
@@ -78,21 +72,6 @@ const styles = StyleSheet.create({
   flatList: {
     position: 'sticky',
     marginLeft: -20
-  },
-  header: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: '#1D00D4',
-    alignItems: 'flex-end',
-    paddingBottom: 10,
-    justifyContent: 'center',
-    flexDirection: 'row'
-
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
   },
   body: {
     width: '100%',
