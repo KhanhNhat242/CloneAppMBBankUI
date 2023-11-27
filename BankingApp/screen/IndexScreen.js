@@ -18,6 +18,7 @@ import Pay from './Pay.js';
 import TransferScreen from './TransferScreen.js';
 import SuccessTransfer from './SuccessTransfer.js';
 import NotifyScreen from './NotifyScreen.js';
+import ConfirmTransfer from './ConfirmTransfer.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -100,6 +101,7 @@ export default function RootComponent() {
                 <Stack.Screen name='Transfer' component={TransferScreen} />
                 <Stack.Screen name='TransferSuccess' component={SuccessTransfer} />    
                 <Stack.Screen name='Notify' component={NotifyScreen} />
+                <Stack.Screen name='ConfirmTransfer' component={ConfirmTransfer} />
             </Stack.Navigator>
         </NavigationContainer>
     )

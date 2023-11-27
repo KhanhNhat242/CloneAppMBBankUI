@@ -4,9 +4,7 @@ import AccountOptionComponent from './AccountOptionComponent'
 import { Ionicons } from '@expo/vector-icons';
 
 export default function AccountModal({ isVisible, onClose, userData, flagg }) {
-    const [flag, setFlag] = useState(0)
-
-    console.log(flagg)
+    const [flag, setFlag] = useState()
 
     useEffect(() => {
         if(flagg == 1)

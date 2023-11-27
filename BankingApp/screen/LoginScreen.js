@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 export default function LoginScreen() {
-  const [userName, setUserName] = useState('0916420671');
-  const [password, setPassword] = useState('12345678');
+  const [userName, setUserName] = useState('0348307336');
+  const [password, setPassword] = useState('1234567');
   ;
   const loginData = {
     userName: userName,
@@ -29,7 +29,7 @@ export default function LoginScreen() {
         phone: loginData.userName,
         password: loginData.password,
       };
-      fetch('http://localhost:8080/api/auth/login', {
+      fetch('http://192.168.56.1:8080/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -35,12 +35,12 @@ public class TransferREST {
     @PostMapping("/transferMoney")
     @Transactional
     @ResponseBody
-    public boolean transferMoney(@RequestParam double money, @RequestParam String accountSource, @RequestParam(name = "stk") String accountGet, @RequestParam String content){
+    public Transfer transferMoney(@RequestParam double money, @RequestParam String accountSource, @RequestParam(name = "stk") String accountGet, @RequestParam String content){
         User userGet = userService.findByPhone(accountGet);
         User userSource = userService.findByPhone(accountSource);
 
         if(userGet == null){
-            return false;
+            return null;
         }
         else{
             Date currentDate = new Date();
@@ -54,13 +54,24 @@ public class TransferREST {
             userService.createOrUpdate(userSource);
             transferService.createOrUpdate(t);
 
-            return true;
+            return t;
         }
     }
 
     @GetMapping("/getAllTransaction")
     public List<Transfer> getAllTransaction() {
         return transferService.getAll();
+    }
+    @GetMapping("/getUserGet")
+    @Transactional
+    @ResponseBody
+    public User getUserGet(@RequestParam(name = "stk") String accountGet){
+        User user = userService.findByPhone(accountGet);
+        System.out.println(user);
+        if(user==null){
+            return null;
+        }
+        return user;
     }
 }
 

@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findByPhone(String p){
-        return userRepository.findByPhone(p).get();
+        return userRepository.findByPhone(p).orElse(null);
     }
 
     public void createOrUpdate(User u){
